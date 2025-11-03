@@ -10,6 +10,8 @@ import Calendar from "./pages/Calendar";
 import Analytics from "./pages/Analytics";
 import Profile from "./pages/Profile";
 import History from "./pages/History";
+import Testimonials from "./pages/Testimonials";
+import Install from "./pages/Install";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const App = () => (
           <Route path="/history" element={<History />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/install" element={<Install />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

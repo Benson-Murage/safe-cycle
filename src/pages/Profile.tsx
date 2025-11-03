@@ -4,8 +4,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import Navigation from "@/components/Navigation";
 import ProfileSettings from "@/components/ProfileSettings";
+import ShareApp from "@/components/ShareApp";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { MessageSquareHeart, Download, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Profile = () => {
@@ -58,7 +59,28 @@ const Profile = () => {
             Logout
           </Button>
         </div>
-        <ProfileSettings userId={user.id} />
+        <div className="space-y-6">
+          <ProfileSettings userId={user.id} />
+          <ShareApp />
+          <div className="flex gap-3">
+            <Button 
+              variant="soft" 
+              className="flex-1"
+              onClick={() => navigate("/testimonials")}
+            >
+              <MessageSquareHeart className="h-4 w-4 mr-2" />
+              Testimonials
+            </Button>
+            <Button 
+              variant="soft" 
+              className="flex-1"
+              onClick={() => navigate("/install")}
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Install App
+            </Button>
+          </div>
+        </div>
       </div>
       <Navigation />
     </div>
