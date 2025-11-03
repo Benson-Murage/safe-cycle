@@ -16,6 +16,7 @@ interface ProfileSettingsProps {
 
 const ProfileSettings = ({ userId }: ProfileSettingsProps) => {
   const [username, setUsername] = useState("");
+  const [lastPeriodDate, setLastPeriodDate] = useState("");
   const [avgCycle, setAvgCycle] = useState(28);
   const [avgPeriod, setAvgPeriod] = useState(5);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
@@ -35,6 +36,7 @@ const ProfileSettings = ({ userId }: ProfileSettingsProps) => {
 
       if (data) {
         setUsername(data.username || "");
+        setLastPeriodDate(data.last_period_date || "");
         setAvgCycle(data.average_cycle_length);
         setAvgPeriod(data.average_period_length);
         setAvatarUrl(data.avatar_url);
@@ -118,6 +120,7 @@ const ProfileSettings = ({ userId }: ProfileSettingsProps) => {
       .from("profiles")
       .update({
         username,
+        last_period_date: lastPeriodDate || null,
         average_cycle_length: avgCycle,
         average_period_length: avgPeriod,
         notification_enabled: notificationsEnabled,
@@ -180,6 +183,19 @@ const ProfileSettings = ({ userId }: ProfileSettingsProps) => {
             className="rounded-xl"
           />
         </div>
+        
+        <div className="space-y-2">
+          <Label htmlFor="lastPeriod">Last Period Start Date</Label>
+          <Input
+            id="lastPeriod"
+            type="date"
+            value={lastPeriodDate}
+            onChange={(e) => setLastPeriodDate(e.target.value)}
+            className="rounded-xl"
+          />
+          <p className="text-xs text-muted-foreground">This helps track your cycle and predict your next period</p>
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="avgCycle">Average Cycle Length (days)</Label>
           <Input
