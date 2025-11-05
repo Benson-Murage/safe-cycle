@@ -122,6 +122,48 @@ export type Database = {
         }
         Relationships: []
       }
+      partner_shares: {
+        Row: {
+          accepted_at: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          partner_email: string
+          partner_user_id: string | null
+          permissions: Json
+          revoked_at: string | null
+          share_code: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          partner_email: string
+          partner_user_id?: string | null
+          permissions?: Json
+          revoked_at?: string | null
+          share_code: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          accepted_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          partner_email?: string
+          partner_user_id?: string | null
+          permissions?: Json
+          revoked_at?: string | null
+          share_code?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       post_likes: {
         Row: {
           created_at: string
@@ -266,7 +308,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_share_code: { Args: never; Returns: string }
     }
     Enums: {
       [_ in never]: never

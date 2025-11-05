@@ -5,6 +5,7 @@ import { User } from "@supabase/supabase-js";
 import Navigation from "@/components/Navigation";
 import ProfileSettings from "@/components/ProfileSettings";
 import ShareApp from "@/components/ShareApp";
+import PartnerSharing from "@/components/PartnerSharing";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { MessageSquareHeart, Download, LogOut, Moon, Sun } from "lucide-react";
@@ -84,6 +85,7 @@ const Profile = () => {
             </Button>
           </div>
 
+          <PartnerSharing userId={user.id} />
           <ShareApp />
           <div className="flex gap-3">
             <Button 

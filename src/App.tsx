@@ -13,6 +13,8 @@ import History from "./pages/History";
 import Community from "./pages/Community";
 import Testimonials from "./pages/Testimonials";
 import Install from "./pages/Install";
+import PartnerAccept from "./pages/PartnerAccept";
+import PartnerView from "./pages/PartnerView";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +36,8 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/install" element={<Install />} />
+          <Route path="/partner-accept" element={<PartnerAccept />} />
+          <Route path="/partner-view" element={<PartnerView />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Calendar, BarChart3, User, Users } from "lucide-react";
+import { Home, Calendar, BarChart3, User, Users, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Navigation = () => {
@@ -8,6 +8,7 @@ const Navigation = () => {
   const navItems = [
     { path: "/dashboard", icon: Home, label: "Home" },
     { path: "/calendar", icon: Calendar, label: "Calendar" },
+    { path: "/partner-view", icon: Heart, label: "Partner" },
     { path: "/community", icon: Users, label: "Community" },
     { path: "/analytics", icon: BarChart3, label: "Stats" },
     { path: "/profile", icon: User, label: "Profile" },
