@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import CycleChart from "@/components/CycleChart";
 import SymptomFrequency from "@/components/SymptomFrequency";
 import CyclePredictions from "@/components/CyclePredictions";
+import Footer from "@/components/Footer";
 
 const Analytics = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -37,7 +38,7 @@ const Analytics = () => {
 
   return (
     <div className="min-h-screen bg-gradient-soft pb-20">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 py-8 max-w-4xl mb-20">
         <h1 className="text-3xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
           Your Insights
         </h1>
@@ -47,6 +48,7 @@ const Analytics = () => {
           <SymptomFrequency userId={user.id} />
         </div>
       </div>
+      <Footer />
       <Navigation />
     </div>
   );

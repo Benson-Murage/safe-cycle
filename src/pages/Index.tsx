@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Heart, Calendar, TrendingUp, Shield } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ const Index = () => {
 
       {/* CTA Section */}
       <div className="container mx-auto px-4 py-20">
-        <div className="max-w-3xl mx-auto text-center space-y-6 p-12 rounded-3xl bg-gradient-primary shadow-glow">
+        <div className="max-w-3xl mx-auto text-center space-y-6 p-12 rounded-3xl gradient-animated shadow-glow">
           <h2 className="text-4xl font-bold text-white">
             Ready to take control of your cycle?
           </h2>
@@ -100,6 +101,7 @@ const Index = () => {
           </Button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

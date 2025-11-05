@@ -40,11 +40,14 @@ All colors MUST be HSL.
     --radius: 1rem;
 
     --gradient-primary: linear-gradient(135deg, hsl(330 70% 60%), hsl(270 60% 65%));
+    --gradient-animated: linear-gradient(135deg, hsl(330 70% 60%), hsl(270 60% 65%), hsl(180 60% 55%), hsl(330 70% 60%));
     --gradient-soft: linear-gradient(180deg, hsl(330 55% 98%), hsl(270 40% 96%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(330 40% 98%));
+    --gradient-vibrant: linear-gradient(135deg, hsl(330 85% 65%), hsl(270 70% 60%), hsl(180 65% 60%));
     
     --shadow-soft: 0 4px 20px -4px hsl(330 70% 60% / 0.15);
     --shadow-glow: 0 0 30px hsl(330 85% 75% / 0.3);
+    --shadow-colorful: 0 8px 32px -8px hsl(330 70% 60% / 0.3), 0 0 0 1px hsl(330 70% 60% / 0.1);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 270 30% 15%;
@@ -87,11 +90,14 @@ All colors MUST be HSL.
     --ring: 330 70% 60%;
 
     --gradient-primary: linear-gradient(135deg, hsl(330 70% 60%), hsl(270 50% 50%));
+    --gradient-animated: linear-gradient(135deg, hsl(330 70% 60%), hsl(270 50% 50%), hsl(180 60% 55%), hsl(330 70% 60%));
     --gradient-soft: linear-gradient(180deg, hsl(270 40% 8%), hsl(270 35% 12%));
     --gradient-card: linear-gradient(145deg, hsl(270 35% 12%), hsl(270 30% 15%));
+    --gradient-vibrant: linear-gradient(135deg, hsl(330 85% 55%), hsl(270 70% 50%), hsl(180 65% 50%));
     
     --shadow-soft: 0 4px 20px -4px hsl(330 70% 60% / 0.25);
     --shadow-glow: 0 0 30px hsl(330 85% 75% / 0.2);
+    --shadow-colorful: 0 8px 32px -8px hsl(330 70% 60% / 0.4), 0 0 0 1px hsl(330 70% 60% / 0.2);
 
     --sidebar-background: 270 35% 12%;
     --sidebar-foreground: 330 30% 95%;
@@ -111,5 +117,33 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .gradient-animated {
+    background: var(--gradient-animated);
+    background-size: 300% 300%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  .gradient-vibrant {
+    background: var(--gradient-vibrant);
+  }
+
+  .shadow-colorful {
+    box-shadow: var(--shadow-colorful);
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 }

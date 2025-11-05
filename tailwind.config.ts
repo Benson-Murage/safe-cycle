@@ -61,12 +61,15 @@ export default {
       },
       backgroundImage: {
         'gradient-primary': 'var(--gradient-primary)',
+        'gradient-animated': 'var(--gradient-animated)',
         'gradient-soft': 'var(--gradient-soft)',
         'gradient-card': 'var(--gradient-card)',
+        'gradient-vibrant': 'var(--gradient-vibrant)',
       },
       boxShadow: {
         'soft': 'var(--shadow-soft)',
         'glow': 'var(--shadow-glow)',
+        'colorful': 'var(--shadow-colorful)',
       },
       borderRadius: {
         lg: "var(--radius)",

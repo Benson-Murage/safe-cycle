@@ -5,6 +5,7 @@ import { User } from "@supabase/supabase-js";
 import Navigation from "@/components/Navigation";
 import ProfileSettings from "@/components/ProfileSettings";
 import ShareApp from "@/components/ShareApp";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { MessageSquareHeart, Download, LogOut, Moon, Sun } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -51,7 +52,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-soft pb-20">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 py-8 max-w-4xl mb-20">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
             Profile
@@ -104,6 +105,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <Footer />
       <Navigation />
     </div>
   );

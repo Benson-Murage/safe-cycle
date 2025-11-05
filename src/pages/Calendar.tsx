@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import Navigation from "@/components/Navigation";
 import CalendarView from "@/components/CalendarView";
+import Footer from "@/components/Footer";
 
 const Calendar = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -35,12 +36,13 @@ const Calendar = () => {
 
   return (
     <div className="min-h-screen bg-gradient-soft pb-20">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 py-8 max-w-4xl mb-20">
         <h1 className="text-3xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
           Calendar
         </h1>
         <CalendarView userId={user.id} />
       </div>
+      <Footer />
       <Navigation />
     </div>
   );
