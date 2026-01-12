@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      bbt_logs: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          notes: string | null
+          temperature: number
+          time_taken: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          notes?: string | null
+          temperature: number
+          time_taken?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          notes?: string | null
+          temperature?: number
+          time_taken?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      cervical_mucus_logs: {
+        Row: {
+          amount: string | null
+          created_at: string
+          date: string
+          id: string
+          notes: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          amount?: string | null
+          created_at?: string
+          date: string
+          id?: string
+          notes?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          amount?: string | null
+          created_at?: string
+          date?: string
+          id?: string
+          notes?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       comments: {
         Row: {
           content: string
@@ -119,6 +179,98 @@ export type Database = {
           sleep_hours?: number | null
           user_id?: string
           water_intake?: number | null
+        }
+        Relationships: []
+      }
+      medication_logs: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          medication_id: string
+          skipped_reason: string | null
+          taken: boolean
+          time_taken: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          medication_id: string
+          skipped_reason?: string | null
+          taken?: boolean
+          time_taken?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          medication_id?: string
+          skipped_reason?: string | null
+          taken?: boolean
+          time_taken?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medication_logs_medication_id_fkey"
+            columns: ["medication_id"]
+            isOneToOne: false
+            referencedRelation: "medications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medications: {
+        Row: {
+          created_at: string
+          custom_reminder_text: string | null
+          dosage: string | null
+          end_date: string | null
+          frequency: string
+          id: string
+          name: string
+          notes: string | null
+          reminder_enabled: boolean
+          reminder_time: string | null
+          start_date: string | null
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          custom_reminder_text?: string | null
+          dosage?: string | null
+          end_date?: string | null
+          frequency: string
+          id?: string
+          name: string
+          notes?: string | null
+          reminder_enabled?: boolean
+          reminder_time?: string | null
+          start_date?: string | null
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          custom_reminder_text?: string | null
+          dosage?: string | null
+          end_date?: string | null
+          frequency?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          reminder_enabled?: boolean
+          reminder_time?: string | null
+          start_date?: string | null
+          type?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }

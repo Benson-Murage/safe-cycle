@@ -9,6 +9,7 @@ import CycleSummary from "@/components/CycleSummary";
 import DailyQuote from "@/components/DailyQuote";
 import FertilityInfo from "@/components/FertilityInfo";
 import SymptomFrequency from "@/components/SymptomFrequency";
+import MedicationTracker from "@/components/MedicationTracker";
 import Footer from "@/components/Footer";
 import { OnboardingTour } from "@/components/OnboardingTour";
 import { EmailVerificationBanner } from "@/components/EmailVerificationBanner";
@@ -85,6 +86,7 @@ const Dashboard = () => {
           <PeriodCountdown userId={user.id} />
           {fertilityData && <FertilityInfo fertilityData={fertilityData} />}
           <QuickActions userId={user.id} />
+          <MedicationTracker userId={user.id} />
           <SymptomFrequency userId={user.id} />
           <CycleSummary userId={user.id} />
         </div>
