@@ -4,10 +4,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Droplet, Smile, Heart, Calendar as CalendarIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Droplet, Smile, Heart, Calendar as CalendarIcon, Pencil, ClipboardList } from "lucide-react";
 import { format } from "date-fns";
+import EditSymptomDialog from "@/components/dialogs/EditSymptomDialog";
+import EditCheckInDialog from "@/components/dialogs/EditCheckInDialog";
 
 interface PeriodLog {
   id: string;
@@ -41,6 +44,10 @@ const History = () => {
   const [checkIns, setCheckIns] = useState<DailyCheckIn[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  // Edit dialog states
+  const [editingSymptom, setEditingSymptom] = useState<SymptomLog | null>(null);
+  const [editingCheckIn, setEditingCheckIn] = useState<DailyCheckIn | null>(null);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -106,10 +113,25 @@ const History = () => {
     return null;
   }
 
+  const EmptyState = ({ icon: Icon, title, description }: { icon: any; title: string; description: string }) => (
+    <div className="text-center py-8 space-y-3">
+      <div className="mx-auto w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+        <Icon className="h-6 w-6 text-muted-foreground" />
+      </div>
+      <div>
+        <p className="font-medium text-foreground">{title}</p>
+        <p className="text-sm text-muted-foreground mt-1">{description}</p>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gradient-soft pb-20">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-6">Your History</h1>
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold">Your History</h1>
+          <p className="text-muted-foreground mt-1">View and manage your logged data</p>
+        </div>
 
         <div className="space-y-6">
           {/* Period Logs */}
@@ -119,12 +141,19 @@ const History = () => {
                 <Droplet className="h-5 w-5 text-primary" />
                 Period Logs
               </CardTitle>
+              <CardDescription>
+                Your recorded menstrual cycles
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {loading ? (
-                <p className="text-muted-foreground">Loading...</p>
+                <p className="text-muted-foreground animate-pulse">Loading your data...</p>
               ) : periodLogs.length === 0 ? (
-                <p className="text-muted-foreground">No period logs yet</p>
+                <EmptyState 
+                  icon={Droplet}
+                  title="No periods logged yet"
+                  description="Log your first period from the Dashboard to start tracking your cycle."
+                />
               ) : (
                 <div className="space-y-3">
                   {periodLogs.map((log) => (
@@ -135,7 +164,7 @@ const History = () => {
                       <div>
                         <p className="font-medium">
                           {format(new Date(log.start_date), "MMM d, yyyy")}
-                          {log.end_date && ` - ${format(new Date(log.end_date), "MMM d, yyyy")}`}
+                          {log.end_date && ` – ${format(new Date(log.end_date), "MMM d, yyyy")}`}
                         </p>
                         {log.end_date && (
                           <p className="text-sm text-muted-foreground">
@@ -157,28 +186,45 @@ const History = () => {
                 <Heart className="h-5 w-5 text-primary" />
                 Daily Check-Ins
               </CardTitle>
+              <CardDescription>
+                Your wellness and mood records
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {loading ? (
-                <p className="text-muted-foreground">Loading...</p>
+                <p className="text-muted-foreground animate-pulse">Loading your data...</p>
               ) : checkIns.length === 0 ? (
-                <p className="text-muted-foreground">No check-ins yet</p>
+                <EmptyState 
+                  icon={Heart}
+                  title="No check-ins yet"
+                  description="Daily check-ins help you spot patterns in mood, energy, and wellness over time."
+                />
               ) : (
                 <div className="space-y-3">
                   {checkIns.map((checkIn) => (
                     <div
                       key={checkIn.id}
-                      className="p-4 bg-muted/50 rounded-lg space-y-2"
+                      className="p-4 bg-muted/50 rounded-lg space-y-2 group"
                     >
                       <div className="flex items-center justify-between">
                         <p className="font-medium">
                           {format(new Date(checkIn.date), "MMM d, yyyy")}
                         </p>
-                        {checkIn.mood && (
-                          <Badge variant="secondary" className="capitalize">
-                            {checkIn.mood}
-                          </Badge>
-                        )}
+                        <div className="flex items-center gap-2">
+                          {checkIn.mood && (
+                            <Badge variant="secondary" className="capitalize">
+                              {checkIn.mood}
+                            </Badge>
+                          )}
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => setEditingCheckIn(checkIn)}
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
                       <div className="grid grid-cols-3 gap-2 text-sm text-muted-foreground">
                         {checkIn.energy_level && (
@@ -208,28 +254,45 @@ const History = () => {
                 <Smile className="h-5 w-5 text-primary" />
                 Symptom Logs
               </CardTitle>
+              <CardDescription>
+                Track symptoms to discover your patterns
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {loading ? (
-                <p className="text-muted-foreground">Loading...</p>
+                <p className="text-muted-foreground animate-pulse">Loading your data...</p>
               ) : symptomLogs.length === 0 ? (
-                <p className="text-muted-foreground">No symptom logs yet</p>
+                <EmptyState 
+                  icon={ClipboardList}
+                  title="No symptoms logged yet"
+                  description="Logging symptoms helps identify patterns related to your cycle phases."
+                />
               ) : (
                 <div className="space-y-3">
                   {symptomLogs.map((log) => (
                     <div
                       key={log.id}
-                      className="p-4 bg-muted/50 rounded-lg space-y-2"
+                      className="p-4 bg-muted/50 rounded-lg space-y-2 group"
                     >
                       <div className="flex items-center justify-between">
                         <p className="font-medium">
                           {format(new Date(log.date), "MMM d, yyyy")}
                         </p>
-                        {log.mood && (
-                          <Badge variant="secondary" className="capitalize">
-                            {log.mood}
-                          </Badge>
-                        )}
+                        <div className="flex items-center gap-2">
+                          {log.mood && (
+                            <Badge variant="secondary" className="capitalize">
+                              {log.mood}
+                            </Badge>
+                          )}
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => setEditingSymptom(log)}
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
                       {log.symptoms && log.symptoms.length > 0 && (
                         <div className="flex flex-wrap gap-2">
@@ -253,6 +316,20 @@ const History = () => {
       </div>
       <Footer />
       <Navigation />
+
+      {/* Edit Dialogs */}
+      <EditSymptomDialog
+        open={!!editingSymptom}
+        onOpenChange={(open) => !open && setEditingSymptom(null)}
+        symptomLog={editingSymptom}
+        onSuccess={fetchHistory}
+      />
+      <EditCheckInDialog
+        open={!!editingCheckIn}
+        onOpenChange={(open) => !open && setEditingCheckIn(null)}
+        checkIn={editingCheckIn}
+        onSuccess={fetchHistory}
+      />
     </div>
   );
 };
