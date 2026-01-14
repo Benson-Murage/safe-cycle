@@ -11,6 +11,7 @@ import Analytics from "./pages/Analytics";
 import Profile from "./pages/Profile";
 import History from "./pages/History";
 import Community from "./pages/Community";
+import PostDetail from "./pages/PostDetail";
 import Testimonials from "./pages/Testimonials";
 import Install from "./pages/Install";
 import PartnerAccept from "./pages/PartnerAccept";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/history" element={<History />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/community/post/:postId" element={<PostDetail />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/install" element={<Install />} />
