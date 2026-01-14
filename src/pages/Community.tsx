@@ -5,7 +5,7 @@ import { User } from "@supabase/supabase-js";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -34,6 +34,7 @@ const Community = () => {
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [likes, setLikes] = useState<Record<string, boolean>>({});
+  const [likeCounts, setLikeCounts] = useState<Record<string, number>>({});
   const [commentCounts, setCommentCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -101,6 +102,7 @@ const Community = () => {
       if (user) {
         const postIds = data.map(p => p.id);
         
+        // Get user's likes
         const { data: likesData } = await supabase
           .from("post_likes")
           .select("post_id")
@@ -112,6 +114,18 @@ const Community = () => {
           likesMap[like.post_id] = true;
         });
         setLikes(likesMap);
+
+        // Get all like counts
+        const { data: allLikesData } = await supabase
+          .from("post_likes")
+          .select("post_id")
+          .in("post_id", postIds);
+
+        const likeCountsMap: Record<string, number> = {};
+        allLikesData?.forEach(like => {
+          likeCountsMap[like.post_id] = (likeCountsMap[like.post_id] || 0) + 1;
+        });
+        setLikeCounts(likeCountsMap);
 
         // Get comment counts
         const { data: commentsData } = await supabase
@@ -174,6 +188,7 @@ const Community = () => {
         .eq("user_id", user.id);
       
       setLikes(prev => ({ ...prev, [postId]: false }));
+      setLikeCounts(prev => ({ ...prev, [postId]: Math.max(0, (prev[postId] || 1) - 1) }));
     } else {
       // Like
       await supabase.from("post_likes").insert({
@@ -182,6 +197,7 @@ const Community = () => {
       });
       
       setLikes(prev => ({ ...prev, [postId]: true }));
+      setLikeCounts(prev => ({ ...prev, [postId]: (prev[postId] || 0) + 1 }));
     }
   };
 
@@ -304,7 +320,11 @@ const Community = () => {
             </Card>
           ) : (
             posts.map(post => (
-              <Card key={post.id} className="bg-gradient-card shadow-soft border-border/50 hover:shadow-glow transition-shadow">
+              <Card 
+                key={post.id} 
+                className="bg-gradient-card shadow-soft border-border/50 hover:shadow-glow transition-shadow cursor-pointer"
+                onClick={() => navigate(`/community/post/${post.id}`)}
+              >
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -325,20 +345,30 @@ const Community = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground whitespace-pre-wrap mb-4">
+                  <p className="text-muted-foreground whitespace-pre-wrap mb-4 line-clamp-3">
                     {post.content}
                   </p>
                   <div className="flex items-center gap-4">
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleLike(post.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLike(post.id);
+                      }}
                       className={likes[post.id] ? "text-primary" : ""}
                     >
                       <Heart className={`h-4 w-4 mr-1 ${likes[post.id] ? "fill-current" : ""}`} />
-                      Like
+                      {likeCounts[post.id] || 0} {likeCounts[post.id] === 1 ? "Like" : "Likes"}
                     </Button>
-                    <Button variant="ghost" size="sm">
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/community/post/${post.id}`);
+                      }}
+                    >
                       <MessageSquare className="h-4 w-4 mr-1" />
                       {commentCounts[post.id] || 0} Comments
                     </Button>
