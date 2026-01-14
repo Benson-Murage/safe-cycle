@@ -16,6 +16,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { MessageSquare, Heart, Plus, User as UserIcon } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import CommentsDialog from "@/components/dialogs/CommentsDialog";
 
 interface Post {
   id: string;
@@ -37,6 +38,8 @@ const Community = () => {
   const [commentCounts, setCommentCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [commentsDialogOpen, setCommentsDialogOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [filter, setFilter] = useState("all");
   
   const [newPost, setNewPost] = useState({
@@ -172,7 +175,7 @@ const Community = () => {
         .delete()
         .eq("post_id", postId)
         .eq("user_id", user.id);
-      
+
       setLikes(prev => ({ ...prev, [postId]: false }));
     } else {
       // Like
@@ -180,9 +183,14 @@ const Community = () => {
         post_id: postId,
         user_id: user.id,
       });
-      
+
       setLikes(prev => ({ ...prev, [postId]: true }));
     }
+  };
+
+  const handleOpenComments = (post: Post) => {
+    setSelectedPost(post);
+    setCommentsDialogOpen(true);
   };
 
   if (!user) return null;
@@ -338,7 +346,11 @@ const Community = () => {
                       <Heart className={`h-4 w-4 mr-1 ${likes[post.id] ? "fill-current" : ""}`} />
                       Like
                     </Button>
-                    <Button variant="ghost" size="sm">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleOpenComments(post)}
+                    >
                       <MessageSquare className="h-4 w-4 mr-1" />
                       {commentCounts[post.id] || 0} Comments
                     </Button>
@@ -351,6 +363,16 @@ const Community = () => {
       </div>
       <Footer />
       <Navigation />
+
+      {selectedPost && (
+        <CommentsDialog
+          open={commentsDialogOpen}
+          onOpenChange={setCommentsDialogOpen}
+          postId={selectedPost.id}
+          userId={user.id}
+          postTitle={selectedPost.title}
+        />
+      )}
     </div>
   );
 };
