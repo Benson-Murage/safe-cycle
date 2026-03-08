@@ -284,7 +284,7 @@ const History = () => {
                 />
               ) : (
                 <div className="space-y-3">
-                  {symptomLogs.map((log) => (
+                  {symptomLogs.slice(0, visibleSymptoms).map((log) => (
                     <div
                       key={log.id}
                       className="p-4 bg-muted/50 rounded-lg space-y-2 group"
@@ -323,6 +323,11 @@ const History = () => {
                       )}
                     </div>
                   ))}
+                  {visibleSymptoms < symptomLogs.length && (
+                    <Button variant="ghost" className="w-full" onClick={() => setVisibleSymptoms(v => v + ITEMS_PER_PAGE)}>
+                      <ChevronDown className="h-4 w-4 mr-2" /> Show More
+                    </Button>
+                  )}
                 </div>
               )}
             </CardContent>
