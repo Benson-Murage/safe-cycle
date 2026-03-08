@@ -332,7 +332,7 @@ const Community = () => {
           ) : filteredPosts.length === 0 ? (
             <Card className="bg-gradient-card shadow-soft border-border/50">
               <CardContent className="py-8 text-center text-muted-foreground">
-                No posts yet. Be the first to share!
+                {searchQuery ? "No posts match your search." : "No posts yet. Be the first to share!"}
               </CardContent>
             </Card>
           ) : (
