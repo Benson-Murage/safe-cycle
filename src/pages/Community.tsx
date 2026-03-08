@@ -393,7 +393,8 @@ const Community = () => {
                 </CardContent>
               </Card>
             ))
-          )}
+          );
+          })()}
         </div>
       </div>
       <Footer />
