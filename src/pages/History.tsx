@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Droplet, Smile, Heart, Calendar as CalendarIcon, Pencil, ClipboardList } from "lucide-react";
+import { Droplet, Smile, Heart, Calendar as CalendarIcon, Pencil, ClipboardList, ChevronDown } from "lucide-react";
 import { format } from "date-fns";
 import EditSymptomDialog from "@/components/dialogs/EditSymptomDialog";
 import EditCheckInDialog from "@/components/dialogs/EditCheckInDialog";
