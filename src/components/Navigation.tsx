@@ -8,7 +8,7 @@ const Navigation = () => {
   const navItems = [
     { path: "/dashboard", icon: Home, label: "Home" },
     { path: "/calendar", icon: Calendar, label: "Calendar" },
-    { path: "/partner-view", icon: Heart, label: "Partner" },
+    { path: "/history", icon: Clock, label: "History" },
     { path: "/community", icon: Users, label: "Community" },
     { path: "/analytics", icon: BarChart3, label: "Stats" },
     { path: "/profile", icon: User, label: "Profile" },
