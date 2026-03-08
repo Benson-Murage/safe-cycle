@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { MessageSquare, Heart, Plus, User as UserIcon } from "lucide-react";
+import { MessageSquare, Heart, Plus, User as UserIcon, Search } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 interface Post {
