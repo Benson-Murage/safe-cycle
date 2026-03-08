@@ -293,6 +293,16 @@ const Community = () => {
           </Dialog>
         </div>
 
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search posts..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+
         <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
           {categories.map(cat => (
             <Button
