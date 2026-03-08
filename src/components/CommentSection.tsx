@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, User as UserIcon, Trash2, MessageSquare } from "lucide-react";
+import { Loader2, User as UserIcon, Trash2, MessageSquare, Pencil, Check, X } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import {
   AlertDialog,
