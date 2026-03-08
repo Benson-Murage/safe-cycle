@@ -51,6 +51,8 @@ const Analytics = () => {
           <HealthInsights userId={user.id} />
           <FertilityLogging userId={user.id} />
           <BBTChart userId={user.id} />
+          <MoodTrend userId={user.id} />
+          <CycleLengthChart userId={user.id} />
           <CyclePredictions userId={user.id} />
           <CycleChart userId={user.id} />
           <SymptomFrequency userId={user.id} />

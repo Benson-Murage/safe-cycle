@@ -231,18 +231,47 @@ const CommentSection = ({ postId, userId }: CommentSectionProps) => {
                       </span>
                     </div>
                     <p className="text-foreground whitespace-pre-wrap break-words">
-                      {comment.content}
+                      {editingId === comment.id ? (
+                        <div className="space-y-2">
+                          <Textarea
+                            value={editContent}
+                            onChange={(e) => setEditContent(e.target.value)}
+                            rows={2}
+                            className="resize-none"
+                          />
+                          <div className="flex gap-2">
+                            <Button size="sm" onClick={saveEdit} disabled={!editContent.trim()}>
+                              <Check className="h-3 w-3 mr-1" /> Save
+                            </Button>
+                            <Button size="sm" variant="ghost" onClick={cancelEditing}>
+                              <X className="h-3 w-3 mr-1" /> Cancel
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        comment.content
+                      )}
                     </p>
                   </div>
-                  {comment.user_id === userId && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="flex-shrink-0 text-muted-foreground hover:text-destructive"
-                      onClick={() => confirmDelete(comment.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                  {comment.user_id === userId && editingId !== comment.id && (
+                    <div className="flex gap-1 flex-shrink-0">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-muted-foreground hover:text-primary h-8 w-8"
+                        onClick={() => startEditing(comment)}
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-muted-foreground hover:text-destructive h-8 w-8"
+                        onClick={() => confirmDelete(comment.id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   )}
                 </div>
               </CardContent>
