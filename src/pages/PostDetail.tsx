@@ -5,11 +5,12 @@ import { User } from "@supabase/supabase-js";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CommentSection from "@/components/CommentSection";
+import EditPostDialog from "@/components/EditPostDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Heart, User as UserIcon, Loader2, Trash2 } from "lucide-react";
+import { ArrowLeft, Heart, User as UserIcon, Loader2, Trash2, Pencil } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import {
   AlertDialog,
@@ -43,6 +44,7 @@ const PostDetail = () => {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
   
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -214,14 +216,24 @@ const PostDetail = () => {
                     <Badge variant="outline">{post.category}</Badge>
                   </div>
                   {post.user_id === user.id && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-muted-foreground hover:text-destructive"
-                      onClick={() => setDeleteDialogOpen(true)}
-                    >
-                      <Trash2 className="h-5 w-5" />
-                    </Button>
+                    <div className="flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-muted-foreground hover:text-primary"
+                        onClick={() => setEditDialogOpen(true)}
+                      >
+                        <Pencil className="h-5 w-5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-muted-foreground hover:text-destructive"
+                        onClick={() => setDeleteDialogOpen(true)}
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </Button>
+                    </div>
                   )}
                 </div>
               </CardHeader>
@@ -268,6 +280,13 @@ const PostDetail = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <EditPostDialog
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        post={post}
+        onSuccess={fetchPost}
+      />
     </div>
   );
 };
