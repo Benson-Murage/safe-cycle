@@ -161,7 +161,7 @@ const History = () => {
                 />
               ) : (
                 <div className="space-y-3">
-                  {periodLogs.map((log) => (
+                  {periodLogs.slice(0, visiblePeriods).map((log) => (
                     <div
                       key={log.id}
                       className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
@@ -179,6 +179,11 @@ const History = () => {
                       </div>
                     </div>
                   ))}
+                  {visiblePeriods < periodLogs.length && (
+                    <Button variant="ghost" className="w-full" onClick={() => setVisiblePeriods(v => v + ITEMS_PER_PAGE)}>
+                      <ChevronDown className="h-4 w-4 mr-2" /> Show More
+                    </Button>
+                  )}
                 </div>
               )}
             </CardContent>
