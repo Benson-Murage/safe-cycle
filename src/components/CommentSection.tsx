@@ -43,6 +43,8 @@ const CommentSection = ({ postId, userId }: CommentSectionProps) => {
   const [submitting, setSubmitting] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editContent, setEditContent] = useState("");
   const { toast } = useToast();
 
   useEffect(() => {
