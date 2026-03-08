@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Droplet, Smile, Heart, Calendar as CalendarIcon, Pencil, ClipboardList } from "lucide-react";
+import { Droplet, Smile, Heart, Calendar as CalendarIcon, Pencil, ClipboardList, ChevronDown } from "lucide-react";
 import { format } from "date-fns";
 import EditSymptomDialog from "@/components/dialogs/EditSymptomDialog";
 import EditCheckInDialog from "@/components/dialogs/EditCheckInDialog";
@@ -37,12 +37,17 @@ interface DailyCheckIn {
   notes: string | null;
 }
 
+const ITEMS_PER_PAGE = 10;
+
 const History = () => {
   const [user, setUser] = useState<User | null>(null);
   const [periodLogs, setPeriodLogs] = useState<PeriodLog[]>([]);
   const [symptomLogs, setSymptomLogs] = useState<SymptomLog[]>([]);
   const [checkIns, setCheckIns] = useState<DailyCheckIn[]>([]);
   const [loading, setLoading] = useState(true);
+  const [visiblePeriods, setVisiblePeriods] = useState(ITEMS_PER_PAGE);
+  const [visibleCheckIns, setVisibleCheckIns] = useState(ITEMS_PER_PAGE);
+  const [visibleSymptoms, setVisibleSymptoms] = useState(ITEMS_PER_PAGE);
   const navigate = useNavigate();
 
   // Edit dialog states
@@ -156,7 +161,7 @@ const History = () => {
                 />
               ) : (
                 <div className="space-y-3">
-                  {periodLogs.map((log) => (
+                  {periodLogs.slice(0, visiblePeriods).map((log) => (
                     <div
                       key={log.id}
                       className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
@@ -174,6 +179,11 @@ const History = () => {
                       </div>
                     </div>
                   ))}
+                  {visiblePeriods < periodLogs.length && (
+                    <Button variant="ghost" className="w-full" onClick={() => setVisiblePeriods(v => v + ITEMS_PER_PAGE)}>
+                      <ChevronDown className="h-4 w-4 mr-2" /> Show More
+                    </Button>
+                  )}
                 </div>
               )}
             </CardContent>
@@ -201,7 +211,7 @@ const History = () => {
                 />
               ) : (
                 <div className="space-y-3">
-                  {checkIns.map((checkIn) => (
+                  {checkIns.slice(0, visibleCheckIns).map((checkIn) => (
                     <div
                       key={checkIn.id}
                       className="p-4 bg-muted/50 rounded-lg space-y-2 group"
@@ -242,6 +252,11 @@ const History = () => {
                       )}
                     </div>
                   ))}
+                  {visibleCheckIns < checkIns.length && (
+                    <Button variant="ghost" className="w-full" onClick={() => setVisibleCheckIns(v => v + ITEMS_PER_PAGE)}>
+                      <ChevronDown className="h-4 w-4 mr-2" /> Show More
+                    </Button>
+                  )}
                 </div>
               )}
             </CardContent>
@@ -269,7 +284,7 @@ const History = () => {
                 />
               ) : (
                 <div className="space-y-3">
-                  {symptomLogs.map((log) => (
+                  {symptomLogs.slice(0, visibleSymptoms).map((log) => (
                     <div
                       key={log.id}
                       className="p-4 bg-muted/50 rounded-lg space-y-2 group"
@@ -308,6 +323,11 @@ const History = () => {
                       )}
                     </div>
                   ))}
+                  {visibleSymptoms < symptomLogs.length && (
+                    <Button variant="ghost" className="w-full" onClick={() => setVisibleSymptoms(v => v + ITEMS_PER_PAGE)}>
+                      <ChevronDown className="h-4 w-4 mr-2" /> Show More
+                    </Button>
+                  )}
                 </div>
               )}
             </CardContent>

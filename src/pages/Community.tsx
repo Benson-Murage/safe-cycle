@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { MessageSquare, Heart, Plus, User as UserIcon } from "lucide-react";
+import { MessageSquare, Heart, Plus, User as UserIcon, Search } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 interface Post {
@@ -39,6 +39,7 @@ const Community = () => {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [filter, setFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   
   const [newPost, setNewPost] = useState({
     title: "",
@@ -292,6 +293,16 @@ const Community = () => {
           </Dialog>
         </div>
 
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search posts..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+
         <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
           {categories.map(cat => (
             <Button
@@ -306,20 +317,26 @@ const Community = () => {
         </div>
 
         <div className="space-y-4">
-          {loading ? (
+          {(() => {
+            const filteredPosts = posts.filter(post => {
+              if (!searchQuery.trim()) return true;
+              const q = searchQuery.toLowerCase();
+              return post.title.toLowerCase().includes(q) || post.content.toLowerCase().includes(q);
+            });
+            return loading ? (
             <Card className="bg-gradient-card shadow-soft border-border/50">
               <CardContent className="py-8 text-center text-muted-foreground">
                 Loading posts...
               </CardContent>
             </Card>
-          ) : posts.length === 0 ? (
+          ) : filteredPosts.length === 0 ? (
             <Card className="bg-gradient-card shadow-soft border-border/50">
               <CardContent className="py-8 text-center text-muted-foreground">
-                No posts yet. Be the first to share!
+                {searchQuery ? "No posts match your search." : "No posts yet. Be the first to share!"}
               </CardContent>
             </Card>
           ) : (
-            posts.map(post => (
+            filteredPosts.map(post => (
               <Card 
                 key={post.id} 
                 className="bg-gradient-card shadow-soft border-border/50 hover:shadow-glow transition-shadow cursor-pointer"
@@ -376,7 +393,8 @@ const Community = () => {
                 </CardContent>
               </Card>
             ))
-          )}
+          );
+          })()}
         </div>
       </div>
       <Footer />
