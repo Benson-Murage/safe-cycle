@@ -137,6 +137,34 @@ const CommentSection = ({ postId, userId }: CommentSectionProps) => {
     setDeleteDialogOpen(true);
   };
 
+  const startEditing = (comment: Comment) => {
+    setEditingId(comment.id);
+    setEditContent(comment.content);
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditContent("");
+  };
+
+  const saveEdit = async () => {
+    if (!editingId || !editContent.trim()) return;
+
+    const { error } = await supabase
+      .from("comments")
+      .update({ content: editContent.trim() })
+      .eq("id", editingId)
+      .eq("user_id", userId);
+
+    if (error) {
+      toast({ variant: "destructive", title: "Error", description: "Failed to update comment." });
+    } else {
+      toast({ title: "Comment updated" });
+      fetchComments();
+    }
+    cancelEditing();
+  };
+
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold flex items-center gap-2">
