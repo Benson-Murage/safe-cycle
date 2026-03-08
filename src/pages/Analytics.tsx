@@ -9,6 +9,8 @@ import CyclePredictions from "@/components/CyclePredictions";
 import HealthInsights from "@/components/HealthInsights";
 import FertilityLogging from "@/components/FertilityLogging";
 import BBTChart from "@/components/BBTChart";
+import MoodTrend from "@/components/MoodTrend";
+import CycleLengthChart from "@/components/CycleLengthChart";
 import Footer from "@/components/Footer";
 
 const Analytics = () => {
@@ -49,6 +51,8 @@ const Analytics = () => {
           <HealthInsights userId={user.id} />
           <FertilityLogging userId={user.id} />
           <BBTChart userId={user.id} />
+          <MoodTrend userId={user.id} />
+          <CycleLengthChart userId={user.id} />
           <CyclePredictions userId={user.id} />
           <CycleChart userId={user.id} />
           <SymptomFrequency userId={user.id} />
