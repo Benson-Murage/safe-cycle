@@ -336,7 +336,7 @@ const Community = () => {
               </CardContent>
             </Card>
           ) : (
-            posts.map(post => (
+            filteredPosts.map(post => (
               <Card 
                 key={post.id} 
                 className="bg-gradient-card shadow-soft border-border/50 hover:shadow-glow transition-shadow cursor-pointer"
