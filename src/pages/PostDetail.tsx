@@ -280,6 +280,13 @@ const PostDetail = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <EditPostDialog
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        post={post}
+        onSuccess={fetchPost}
+      />
     </div>
   );
 };

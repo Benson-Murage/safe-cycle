@@ -87,6 +87,7 @@ const Profile = () => {
           </div>
 
           <PartnerSharing userId={user.id} />
+          <DataExport userId={user.id} />
           <ShareApp />
           <div className="flex gap-3">
             <Button 
