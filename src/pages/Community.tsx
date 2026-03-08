@@ -329,7 +329,7 @@ const Community = () => {
                 Loading posts...
               </CardContent>
             </Card>
-          ) : posts.length === 0 ? (
+          ) : filteredPosts.length === 0 ? (
             <Card className="bg-gradient-card shadow-soft border-border/50">
               <CardContent className="py-8 text-center text-muted-foreground">
                 No posts yet. Be the first to share!
