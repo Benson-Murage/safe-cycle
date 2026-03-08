@@ -5,6 +5,7 @@ import { User } from "@supabase/supabase-js";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CommentSection from "@/components/CommentSection";
+import EditPostDialog from "@/components/EditPostDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
