@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Calendar, BarChart3, User, Users, Heart } from "lucide-react";
+import { Home, Calendar, BarChart3, User, Users, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Navigation = () => {
