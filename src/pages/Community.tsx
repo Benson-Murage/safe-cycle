@@ -39,6 +39,7 @@ const Community = () => {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [filter, setFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   
   const [newPost, setNewPost] = useState({
     title: "",
