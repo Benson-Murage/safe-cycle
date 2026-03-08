@@ -317,7 +317,13 @@ const Community = () => {
         </div>
 
         <div className="space-y-4">
-          {loading ? (
+          {(() => {
+            const filteredPosts = posts.filter(post => {
+              if (!searchQuery.trim()) return true;
+              const q = searchQuery.toLowerCase();
+              return post.title.toLowerCase().includes(q) || post.content.toLowerCase().includes(q);
+            });
+            return loading ? (
             <Card className="bg-gradient-card shadow-soft border-border/50">
               <CardContent className="py-8 text-center text-muted-foreground">
                 Loading posts...
