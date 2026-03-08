@@ -7,6 +7,7 @@ import ProfileSettings from "@/components/ProfileSettings";
 import ShareApp from "@/components/ShareApp";
 import PartnerSharing from "@/components/PartnerSharing";
 import Footer from "@/components/Footer";
+import DataExport from "@/components/DataExport";
 import { Button } from "@/components/ui/button";
 import { MessageSquareHeart, Download, LogOut, Moon, Sun } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
