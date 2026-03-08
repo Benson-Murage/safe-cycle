@@ -37,12 +37,17 @@ interface DailyCheckIn {
   notes: string | null;
 }
 
+const ITEMS_PER_PAGE = 10;
+
 const History = () => {
   const [user, setUser] = useState<User | null>(null);
   const [periodLogs, setPeriodLogs] = useState<PeriodLog[]>([]);
   const [symptomLogs, setSymptomLogs] = useState<SymptomLog[]>([]);
   const [checkIns, setCheckIns] = useState<DailyCheckIn[]>([]);
   const [loading, setLoading] = useState(true);
+  const [visiblePeriods, setVisiblePeriods] = useState(ITEMS_PER_PAGE);
+  const [visibleCheckIns, setVisibleCheckIns] = useState(ITEMS_PER_PAGE);
+  const [visibleSymptoms, setVisibleSymptoms] = useState(ITEMS_PER_PAGE);
   const navigate = useNavigate();
 
   // Edit dialog states
