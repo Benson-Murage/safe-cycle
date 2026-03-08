@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Heart, User as UserIcon, Loader2, Trash2 } from "lucide-react";
+import { ArrowLeft, Heart, User as UserIcon, Loader2, Trash2, Pencil } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import {
   AlertDialog,
